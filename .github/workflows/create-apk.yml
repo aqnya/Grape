@@ -20,12 +20,12 @@ jobs:
         flutter-version: 3.32.8
     - run: |
          cd $GITHUB_WORKSPACE/
-         flutter create Grape
+         flutter create grape
          cd $GITHUB_WORKSPACE/
-         tar -cvf fmanager.tar fmanager
+         tar -cvf grape.tar grape
          
     - name: Upload project
       uses: actions/upload-artifact@v4
       with:
         name: Grape
-        path: ${{ github.workspace }}/Grape.tar
+        path: ${{ github.workspace }}/grape.tar
