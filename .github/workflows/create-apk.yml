@@ -1,0 +1,31 @@
+name: Create manager
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Kernel by ${{ github.actor }}
+    runs-on: ubuntu-24.04
+    env:
+      CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
+      CCACHE_NOHASHDIR: "true"
+      CCACHE_HARDLINK: "true"
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v4
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+        flutter-version: 3.32.8
+    - run: |
+         cd $GITHUB_WORKSPACE/
+         flutter create Grape
+         cd $GITHUB_WORKSPACE/
+         tar -cvf fmanager.tar fmanager
+         
+    - name: Upload project
+      uses: actions/upload-artifact@v4
+      with:
+        name: Grape
+        path: ${{ github.workspace }}/Grape.tar
